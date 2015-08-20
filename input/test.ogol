@@ -1,4 +1,23 @@
 
 
------------- hallo
+---------- Comment
 
+pendown;
+
+repeat 5 [
+	forward 10;
+	right 45;
+	forward 10;
+	right 45;
+	forward 10;
+	right 90;
+	forward 10;
+	right 90;
+	back 10;
+]
+
+penup;
+
+
+-- prase(#Program, "")
+-- /amb(_)
