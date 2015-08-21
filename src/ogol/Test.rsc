@@ -1,8 +1,10 @@
 module ogol::Test
+
 import ogol::Syntax;
 import ogol::Eval;
 import ogol::Canvas2JS;
 import ogol::Desugar;
+import ogol::Semantic;
 
 import IO;
 import ParseTree;
@@ -18,17 +20,37 @@ bool canParse(c1, str expr) {
 }
 
 bool visParseTree() {
-	pt = parse(#start[Program], |project://Ogol/input/trees.ogol|);
+	pt = parse(#start[Program], |project://SSPMSE/input/trees.ogol|);
 	renderParsetree(pt);
 	
 	return true;
 }
 
+void visGraph() {
+	nodes = [ box(text("A"), id("A"), size(50), fillColor("lightgreen")),
+	     	  box(text("B"), id("B"), size(60), fillColor("orange")),
+	     	  ellipse( text("C"), id("C"), size(70), fillColor("lightblue")),
+	     	  ellipse(text("D"), id("D"), size(200, 40), fillColor("violet")),
+	          box(text("E"), id("E"), size(50), fillColor("silver")),
+		  box(text("F"), id("F"), size(50), fillColor("coral"))
+	     	];
+	edges = [ edge("A", "B"), edge("B", "C"), edge("B", "D"), edge("A", "C"),
+	          edge("C", "E"), edge("C", "F"), edge("D", "E"), edge("D", "F"),
+	          edge("A", "F")
+	    	]; 
+	render(graph(nodes, edges, hint("spring"), gap(100)));
+}
+
 bool runProgram() {
-	pt = parse(#start[Program], |project://Ogol/input/trees.ogol|);
-	canvas = eval(desugar(pt.top));
+	Program pg = parse(#start[Program], |project://SSPMSE/input/test.ogol|).top;
+	pg = desugar(pg);
 	
-	compileCanvas(canvas, |project://Ogol/input/ogol.js|);
+	analyseProgram(pg);
+	
+	
+	canvas = eval(pg);
+	
+	compileCanvas(canvas, |project://SSPMSE/input/ogol.js|);
 	
 	return true;
 }

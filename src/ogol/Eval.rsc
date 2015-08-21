@@ -170,10 +170,10 @@ State eval((Command)`to <FunId f> <VarId* vars> <Command* cmds> end`, FunEnv fen
 
 State eval((Command)`<FunId f> <Expr* es>;`, FunEnv fenv, VarEnv venv, State state) {
 	funDef = fenv[f];
-		
+	
 	vars = [v | VarId v <- funDef.vars];
-	expts = [e | Expr e <- es];
-
+	exprs = [e | Expr e <- es];
+	
 	for(int i <- [0 .. size(vars)] ) {
 		Expr e = exprs[i];
 		venv = venv + (vars[i]: eval(e, venv) );
@@ -182,7 +182,6 @@ State eval((Command)`<FunId f> <Expr* es>;`, FunEnv fenv, VarEnv venv, State sta
 	for(Command c <- funDef.cmds) {
 		state = eval(c, fenv, venv, state);
 	}
-	
 	return state;
 }
 
@@ -284,7 +283,7 @@ default Value eval(Expr e, VarEnv _) {
 
 // Boolean
 test bool testTrue() = eval((Expr)`true`, ()) ==  boolean(true);
-test bool testTrue() = eval((Expr)`false`, ()) ==  boolean(false);
+test bool testFalse() = eval((Expr)`false`, ()) ==  boolean(false);
 
 // Numbers
 test bool testNumber() = eval((Expr)`-1.23`, ()) == number(-1.23);
