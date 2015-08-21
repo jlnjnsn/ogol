@@ -20,7 +20,7 @@ bool canParse(c1, str expr) {
 }
 
 bool visParseTree() {
-	pt = parse(#start[Program], |project://SSPMSE/input/trees.ogol|);
+	pt = parse(#start[Program], |project://Ogol/input/trees.ogol|);
 	renderParsetree(pt);
 	
 	return true;
@@ -28,15 +28,15 @@ bool visParseTree() {
 
 // Parameter: find all reachable nodes from given node.
 void runSemantic(str n) {
-	Program pg = parse(#start[Program], |project://SSPMSE/input/test.ogol|).top;
+	Program pg = parse(#start[Program], |project://Ogol/input/test.ogol|).top;
 	pg = desugar(pg);
 	analyseProgram(pg, n);
 }
 
 void runProgram() {
-	Program pg = parse(#start[Program], |project://SSPMSE/input/trees.ogol|).top;
+	Program pg = parse(#start[Program], |project://Ogol/input/trees.ogol|).top;
 	pg = desugar(pg);
 	
 	canvas = eval(pg);
-	compileCanvas(canvas, |project://SSPMSE/input/ogol.js|);
+	compileCanvas(canvas, |project://Ogol/input/ogol.js|);
 }
