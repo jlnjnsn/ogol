@@ -12,7 +12,6 @@ import vis::Figure;
 import vis::ParseTree;
 import vis::Render;
 
-
 bool canParse(c1, str expr) {
 	try
 		return /amb(_) !:= parse(c1, expr);

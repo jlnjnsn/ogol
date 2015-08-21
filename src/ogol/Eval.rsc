@@ -35,7 +35,6 @@ NB: home = (0, 0)
 
 
 alias Turtle = tuple[int dir, bool pendown, Point position];
-
 alias State = tuple[Turtle turtle, Canvas canvas];
 
 // Top-level eval function
@@ -155,7 +154,8 @@ State eval((Command)`back <Expr e>;`, FunEnv fenv, VarEnv venv, State state) {
 
 	endPoint = <startPoint.x-deltaX, startPoint.y+deltaY>;
 	
-	if(turtle.pendown) { //canvas
+	// Canvas
+	if(turtle.pendown) {
 		state.canvas = state.canvas + line(startPoint, endPoint);
 	}
 	
@@ -164,10 +164,12 @@ State eval((Command)`back <Expr e>;`, FunEnv fenv, VarEnv venv, State state) {
 	return state;
 }
 
+// Function
 State eval((Command)`to <FunId f> <VarId* vars> <Command* cmds> end`, FunEnv fenv, VarEnv venv, State state) {	
 	return state;
 }
 
+// Call
 State eval((Command)`<FunId f> <Expr* es>;`, FunEnv fenv, VarEnv venv, State state) {
 	funDef = fenv[f];
 	
@@ -182,12 +184,9 @@ State eval((Command)`<FunId f> <Expr* es>;`, FunEnv fenv, VarEnv venv, State sta
 	for(Command c <- funDef.cmds) {
 		state = eval(c, fenv, venv, state);
 	}
+	
 	return state;
 }
-
-/*State eval((Command)`setpencolor <Color c>;`, FunEnv fenv, VarEnv venv, State state) {
-	return state;
-}*/
 
 // Booleans
 Value eval((Expr)`true`, VarEnv env) = boolean(true);

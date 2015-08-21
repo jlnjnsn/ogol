@@ -1,7 +1,6 @@
 module ogol::Semantic
 
 import ogol::Syntax;
-
 import IO;
 import String;
 import ParseTree;
@@ -89,7 +88,6 @@ set[str] reachableFrom(Uses uses, str from) {
 }
 
 // Semantic
-
 Definitions funcInCommands(str scopeName, Command* cmds, Definitions defs) 
 	= ( defs | funcInCommand(scopeName, cmd, it) | cmd <- cmds );
 	
@@ -124,7 +122,6 @@ Uses funcUsedInCommand(str scopeName, (Command)`while <Expr e> <Block b1>`, Defi
 Uses funcUsedInCommand(str scopeName, (Command)`repeat <Expr e> <Block b>`, Definitions defs) {
 	return funcUsedInCommands(scopeName, b.cmds, defs);
 }
-
 
 default Uses funcUsedInCommand(str scopeName, Command cmd, Definitions defs) {
 	return {};
